@@ -59,7 +59,25 @@ func DeleteNode(head **ListNode) {
 }
 
 // Delete the node located at the n-th position
-func DeleteAtNPos() {
+func DeleteAtNPos(head **ListNode, npos int) {
+
+	var cur *ListNode = *head
+	var prev *ListNode = *head
+
+	if *head == nil {
+		return
+	} else if npos == 1 {
+		*head = cur.link
+		cur = nil
+	} else {
+		for npos != 1 {
+			prev = cur
+			cur = cur.link
+			npos--
+		}
+		prev.link = cur.link
+		cur = nil
+	}
 
 }
 
@@ -79,6 +97,22 @@ func FindMiddleOfList(head *ListNode) int {
 	return slow.data
 }
 
+// Reverses the linked list
+func ReverseList(head **ListNode) {
+	var cur, prev, next *ListNode
+	cur = *head
+	prev = nil
+
+	for cur != nil {
+		next = cur.link
+		cur.link = prev
+		prev = cur
+		cur = next
+	}
+
+	*head = prev
+}
+
 func main() {
 
 	var head *ListNode
@@ -94,6 +128,20 @@ func main() {
 
 	DeleteNode(&head)
 
+	Print(head)
+	fmt.Println()
+
+	AddNode(&head, 2)
+
+	Print(head)
+	fmt.Println()
+
+	DeleteAtNPos(&head, 3)
+
+	Print(head)
+	fmt.Println()
+
+	ReverseList(&head)
 	Print(head)
 
 	fmt.Println("The middle node is: ", FindMiddleOfList(head))
